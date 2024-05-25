@@ -47,12 +47,12 @@ def total_edit_counts(df):
     # Plot the total edit counts over time
     plt.figure(figsize=(12, 6))
     sns.lineplot(data=total_edit_counts, x='year', y='edit_count')
-    plt.title('Total Edit Counts Over Years')
+    plt.title('Total Discussion Counts Over Years')
     plt.xlabel('Year')
-    plt.ylabel('Total Edit Count')
+    plt.ylabel('Total Discussion Count')
     plt.xticks(rotation=45)
     # plt.show()
-    plt.savefig('images/Total_Edit_Counts_Over_Years.png')
+    plt.savefig('images/Total_Discussion_Counts_Over_Years.png')
 
 def total_edit_counts_per_industry(df):
     # Extract the year portion from the 'date' column
@@ -62,13 +62,13 @@ def total_edit_counts_per_industry(df):
     edit_counts = df.groupby(['year', 'title']).size().reset_index(name='edit_count')
 
     # Plot the edit counts for each title
-    plt.figure(figsize=(12, 6))
+    plt.figure(figsize=(20, 12))
     sns.lineplot(data=edit_counts, x='year', y='edit_count', hue='title')
-    plt.title('Edit Counts for Each Industry Over Years')
+    plt.title('Discussions for Each Industry Over Years')
     plt.xlabel('Year')
     plt.ylabel('Edit Count')
     plt.xticks(rotation=45)
     plt.legend(title='Title', bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.tight_layout()
     # plt.show()
-    plt.savefig('images/Total_Edit_Counts_Over_Years_Per_Industry.png')
+    plt.savefig('images/Total_Discussion_Counts_Over_Years_Per_Industry.png')
