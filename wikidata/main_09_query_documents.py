@@ -48,7 +48,7 @@ X = vect.fit_transform(df['relevant_content'])
 features = vect.get_feature_names_out()
 
 # Example query
-query = "changes"
+query = "Wikipedia guidelines and policies"
 
 # Transform the query using the same TF-IDF vectorizer
 query_tfidf = vect.transform([query])

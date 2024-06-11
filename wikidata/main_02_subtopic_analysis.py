@@ -44,7 +44,7 @@ def plot_frequency(top_subtopics):
     # Plot the top subtopics for each title
     for title in top_subtopics['title'].unique():
         data = top_subtopics[top_subtopics['title'] == title]
-        plt.figure(figsize=(10, len(data) * 0.5))  # Increase figure size based on the number of subtopics
+        plt.figure(figsize=(10, len(data) * 1))  # Increase figure size based on the number of subtopics
         sns.barplot(data=data, x='count', y='subtopic')
         plt.title(f'Top Subtopics for {title}')
         plt.xlabel('Count')
@@ -54,6 +54,7 @@ def plot_frequency(top_subtopics):
         # plt.show()
         file_name = f"images/{title.replace(':', '_')}_subtopic_count.png"  
         plt.savefig(file_name)
+        plt.close() 
 
 # Function to get sentiment polarity
 def get_sentiment(text):
@@ -88,6 +89,7 @@ def plot_sentiment(sentiment_analysis):
         # plt.show()
         file_name = f"images/{title.replace(':', '_')}_sentiment.png"  
         plt.savefig(file_name)
+        plt.close() 
 
 # Function to get keywords
 def get_keywords(text):
@@ -120,9 +122,9 @@ def main():
     df = pd.read_csv("scratch/n11357738/cleaned_subtopic_and_content.csv")
     subtopic_frequency_analysis(df)
 
-    sentiment_analysis(cleaned_df)
+    # sentiment_analysis(cleaned_df)
 
-    keyword_analysis(cleaned_df)
+    # keyword_analysis(cleaned_df)
 
 if __name__ == "__main__":
     main()

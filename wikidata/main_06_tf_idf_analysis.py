@@ -42,7 +42,7 @@ def stem_text(text):
 
 # Create TfidfVectorizer with n-gram range
 # vect = TfidfVectorizer(analyzer='word', stop_words=stopwords, ngram_range=(1, 2), max_df=0.3, min_df=2)
-vect = TfidfVectorizer(analyzer='word', stop_words=stopwords, ngram_range=(1,2), max_df=0.1, min_df=2)
+vect = TfidfVectorizer(analyzer='word', stop_words=stopwords, ngram_range=(1,2))
 
 
 # Fit and transform the relevant content column
@@ -78,7 +78,7 @@ plt.scatter(centroid_coords[:, 0], centroid_coords[:, 1], marker='X', s=200, lin
 plt.show()
 
 # Plot the top TF-IDF features per cluster
-dfs = top_feats_per_cluster(X, labels, features, 0.1, 50)
+dfs = top_feats_per_cluster(X, labels, features, 0.1, 25)
 plot_tfidf_classfeats_h(dfs)
 
 # Save the TF-IDF features to a file

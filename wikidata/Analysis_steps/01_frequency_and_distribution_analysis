@@ -1,0 +1,76 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+def freq_over_years(df):
+    # Convert discussion_date to datetime
+    df['discussion_date'] = pd.to_datetime(df['discussion_date'])
+
+    # Filter data for the last 10 years
+    df_last_10_years = df[df['discussion_date'] >= pd.Timestamp.now() - pd.DateOffset(years=10)]
+
+    # Group by year and count discussions
+    df_last_10_years['year'] = df_last_10_years['discussion_date'].dt.year
+    discussion_frequency = df_last_10_years.groupby('year').size()
+
+    # Plotting the frequency of discussions over the last 10 years
+    plt.figure(figsize=(10, 6))
+    discussion_frequency.plot(kind='bar')
+    plt.title('Frequency of Discussions Over the Last 10 Years')
+    plt.xlabel('Year')
+    plt.ylabel('Number of Discussions')
+    # plt.show()
+    plt.savefig('images/Frequency_of_Discussion_Over_Years_Per_Industry.png')
+    plt.close() 
+
+def high_activity_page_analysis(df):
+    # Group by title and count discussions
+    high_activity_pages = df.groupby('title').size().sort_values(ascending=False)
+
+    # Plotting the top 15 high-activity pages
+    plt.figure(figsize=(18, 10))
+    high_activity_pages.head(15).plot(kind='bar')
+    plt.title('Top 15 High-Activity Talk Pages')
+    plt.xlabel('Talk Page Title')
+    plt.ylabel('Number of Discussions')
+    plt.xticks(rotation=45, ha='right', fontsize=10)
+    plt.tight_layout()
+    # plt.show()
+    plt.savefig('images/Top_High_Activity_Talk_Pages.png')
+    plt.close() 
+
+    return high_activity_pages.head(15).index.tolist()
+
+def visualize_subtopics_for_top_pages(df, top_pages):
+    for page in top_pages:
+        # Filter the DataFrame for the current page
+        page_df = df[df['title'] == page]
+        
+        # Group by subtopic and count discussions
+        subtopic_counts = page_df.groupby('subtopic').size().sort_values(ascending=False)
+        
+        # Plotting the subtopics for the current page
+        plt.figure(figsize=(18, 10))
+        subtopic_counts.plot(kind='bar')
+        plt.title(f'Subtopics for {page}')
+        plt.xlabel('Subtopic')
+        plt.ylabel('Number of Discussions')
+        plt.xticks(rotation=45, ha='right', fontsize=10)
+        plt.tight_layout()
+        plt.show()
+        # plt.savefig(f'images/Subtopics_for_{page}.png')
+        plt.close()
+
+def remove_talk_prefix(title):
+    return title.replace("Talk:", "")
+
+
+if __name__ == "__main__":
+    # Load the data
+    df = pd.read_csv('scratch/n11357738/cleaned_subtopic_and_content.csv')
+
+    freq_over_years(df)
+    top_pages = high_activity_page_analysis(df)
+    
+    # Visualize subtopics for high-activity pages
+    visualize_subtopics_for_top_pages(df, top_pages)

@@ -42,7 +42,7 @@ def stem_text(text):
 
 # Create TfidfVectorizer with n-gram range
 # vect = TfidfVectorizer(analyzer='word', stop_words=stopwords, ngram_range=(1, 2), max_df=0.3, min_df=2)
-vect = TfidfVectorizer(analyzer='word', stop_words=stopwords, ngram_range=(1,2), max_df=0.2, min_df=2)
+vect = TfidfVectorizer(analyzer='word', stop_words=stopwords, ngram_range=(1,2))
 
 
 # Fit and transform the relevant content column

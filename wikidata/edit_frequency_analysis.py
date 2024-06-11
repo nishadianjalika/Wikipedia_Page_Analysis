@@ -11,6 +11,7 @@ def analyse_edits_over_the_years(df, title, save_path):
     # Save the plot as an image if save_path is provided
     if save_path:
         plt.savefig(save_path)
+        plt.close() 
 
 def edit_count_per_title(df):
     edit_counts = df.groupby('title').size()
@@ -53,6 +54,7 @@ def total_edit_counts(df):
     plt.xticks(rotation=45)
     # plt.show()
     plt.savefig('images/Total_Discussion_Counts_Over_Years.png')
+    plt.close() 
 
 def total_edit_counts_per_industry(df):
     # Extract the year portion from the 'date' column
@@ -72,3 +74,4 @@ def total_edit_counts_per_industry(df):
     plt.tight_layout()
     # plt.show()
     plt.savefig('images/Total_Discussion_Counts_Over_Years_Per_Industry.png')
+    plt.close() 
