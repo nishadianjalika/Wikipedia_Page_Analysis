@@ -33,13 +33,6 @@ category_descriptions = {
 category_texts = list(category_descriptions.values())
 category_vectors = tfidf_vectorizer.transform(category_texts)
 
-def jaccard_similarity(doc1, doc2):
-    words_doc1 = set(doc1.split())
-    words_doc2 = set(doc2.split())
-    intersection = words_doc1.intersection(words_doc2)
-    union = words_doc1.union(words_doc2)
-    return float(len(intersection)) / len(union) if len(union) != 0 else 0
-
 def wordnet_similarity(doc1, doc2):
     words1 = word_tokenize(doc1)
     words2 = word_tokenize(doc2)
@@ -56,7 +49,6 @@ def wordnet_similarity(doc1, doc2):
 # Applying all similarity measures
 results = {
     'Cosine_Similarity': [],
-    'Jaccard_Similarity': [],
     'WordNet_Similarity': []
 }
 
@@ -67,19 +59,14 @@ for i, text_vector in enumerate(discussion_vectors):
     cosine_sim = cosine_similarity(text_vector, category_vectors)
     closest_cat_cosine = list(category_descriptions.keys())[cosine_sim.argmax()]
 
-    # Jaccard Similarity
-    closest_cat_jaccard = max(category_descriptions.keys(), key=lambda cat: jaccard_similarity(text, category_descriptions[cat]))
-
     # WordNet Similarity
     closest_cat_wordnet = max(category_descriptions.keys(), key=lambda cat: wordnet_similarity(text, category_descriptions[cat]))
 
     results['Cosine_Similarity'].append(closest_cat_cosine)
-    results['Jaccard_Similarity'].append(closest_cat_jaccard)
     results['WordNet_Similarity'].append(closest_cat_wordnet)
 
 # Adding results to the DataFrame
 df['Cosine_Assigned_Category'] = results['Cosine_Similarity']
-df['Jaccard_Assigned_Category'] = results['Jaccard_Similarity']
 df['WordNet_Assigned_Category'] = results['WordNet_Similarity']
 
 # Save the DataFrame with topics and categories

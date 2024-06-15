@@ -33,11 +33,6 @@ def convert_xml_to_csv(r_path):
     else:
         print("No data extracted from XML files.")
 
-
-# Tokenize, remove stop words, and lemmatize the text
-# nltk.download('punkt')
-# nltk.download('stopwords')
-# nltk.download('wordnet')
 stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
 
